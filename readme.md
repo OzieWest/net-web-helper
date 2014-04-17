@@ -5,7 +5,7 @@
 var result = String.Empty;
 using (var sut = new SimpleTagBuilder())
 {
-	sut.Tag("div", withChildren: () => 
+	sut.Tag("div", withAttributes: new { id = "testId", @class = "testClass" }, withChildren: () => 
 	{
 		sut.Tag("span", withChildren: () =>
 		{
