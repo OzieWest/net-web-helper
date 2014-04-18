@@ -4,42 +4,47 @@
 
 ```csharp
 var result = String.Empty;
-using (var sut = new SimpleTagBuilder()) 
+using (var _create = new SimpleTagBuilder()) 
 {
-	sut.Tag("div");
-	result = sut.Render();
+	_create.Tag("div");
+	result = _create.Render();
 }
+
+// output: <div></div>
 ```
 
 ```csharp
-var result = String.Empty;
-using (var sut = new SimpleTagBuilder())
+var _result = String.Empty;
+using (var _create = new SimpleTagBuilder())
 {
-	sut.Tag("br", selfClose: true);
-	result = sut.Render();
+	_create.Tag("br", selfClose: true);
+	_result = _create.Render();
 }
+// output: <br/>
 ```
 
 ```csharp
-var result = String.Empty;
-using (var sut = new SimpleTagBuilder())
+var _result = String.Empty;
+using (var _create = new SimpleTagBuilder())
 {
-	sut.Tag("div", withAttributes: new { id = "testId", @class = "testClass" });
-	result = sut.Render();
+	_create.Tag("div", withAttributes: new { id = "testId", @class = "testClass" });
+	_result = _create.Render();
 }
+// output: <div id='testId' class='testClass'></div>
 ```
 
 ```csharp
-var result = String.Empty;
-using (var sut = new SimpleTagBuilder())
+var _result = String.Empty;
+using (var _create = new SimpleTagBuilder())
 {
-	sut.Tag("div", withAttributes: new { id = "testId", @class = "testClass" }, withChildren: () => 
+	_create.Tag("div", withAttributes: new { id = "testId", @class = "testClass" }, withChildren: () => 
 	{
-		sut.Tag("span", withChildren: () =>
+		_create.Tag("span", withChildren: () =>
 		{
-			sut.Text("hello world");
+			_create.Text("hello world");
 		});
 	});
-result = sut.Render();
+	_result = _create.Render();
 }
+// output: <div id='testId' class='testClass'><span>hello world</span></div>
 ```
