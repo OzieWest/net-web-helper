@@ -1,7 +1,8 @@
-##### Simple class for render html struct
+### Simple class for render html struct
 
-##### USE example
+#### HOW TO
 
+##### create simple tag
 ```csharp
 var result = String.Empty;
 using (var _create = new SimpleTagBuilder()) 
@@ -13,6 +14,7 @@ using (var _create = new SimpleTagBuilder())
 // output: <div></div>
 ```
 
+##### create self-contained tag
 ```csharp
 var _result = String.Empty;
 using (var _create = new SimpleTagBuilder())
@@ -23,6 +25,7 @@ using (var _create = new SimpleTagBuilder())
 // output: <br/>
 ```
 
+##### create tag with attributes
 ```csharp
 var _result = String.Empty;
 using (var _create = new SimpleTagBuilder())
@@ -33,6 +36,7 @@ using (var _create = new SimpleTagBuilder())
 // output: <div id='testId' class='testClass'></div>
 ```
 
+##### create tag with nested tags
 ```csharp
 var _result = String.Empty;
 using (var _create = new SimpleTagBuilder())
@@ -48,3 +52,19 @@ using (var _create = new SimpleTagBuilder())
 }
 // output: <div id='testId' class='testClass'><span>hello world</span></div>
 ```
+
+##### create tag with attribute without value
+```csharp
+var _result = String.Empty;
+using (var _create = new SimpleTagBuilder())
+{
+	_create.Tag("div", withAttributes: new { ngApp = "" });
+
+	_result = _create.Render();
+}
+// output: <div ng-app></div>
+```
+
+#### Some conventions
+ - name *myBigAttr* transform to *my-big-attr*
+ - don`t start attribute name with UpperCase

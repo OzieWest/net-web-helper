@@ -9,59 +9,73 @@ namespace WebHelper.Tests
         [TestMethod]
         public void Should_create_clean_element()
         {
-            var result = String.Empty;
-            using (var sut = new SimpleTagBuilder()) 
+            var _result = String.Empty;
+            using (var _create = new SimpleTagBuilder()) 
             {
-                sut.Tag("div");
-                result = sut.Render();
+                _create.Tag("div");
+                _result = _create.Render();
             }
 
-            Assert.AreEqual(result, "<div></div>");
+            Assert.AreEqual(_result, "<div></div>");
         }
 
         [TestMethod]
         public void Should_create_element_with_attr()
         {
-            var result = String.Empty;
-            using (var sut = new SimpleTagBuilder())
+            var _result = String.Empty;
+            using (var _create = new SimpleTagBuilder())
             {
-                sut.Tag("div", withAttributes: new { id = "testId", @class = "testClass" });
-                result = sut.Render();
+                _create.Tag("div", withAttributes: new { id = "testId", @class = "testClass" });
+                _result = _create.Render();
             }
 
-            Assert.AreEqual(result, "<div id='testId' class='testClass'></div>");
+            Assert.AreEqual(_result, "<div id='testId' class='testClass'></div>");
         }
 
         [TestMethod]
         public void Should_create_element_with_nested_element()
         {
-            var result = String.Empty;
-            using (var sut = new SimpleTagBuilder())
+            var _result = String.Empty;
+            using (var _create = new SimpleTagBuilder())
             {
-                sut.Tag("div", withChildren: () => 
+                _create.Tag("div", withChildren: () => 
                 {
-                    sut.Tag("span", withChildren: () =>
+                    _create.Tag("span", withChildren: () =>
                     {
-                        sut.Text("hello world");
+                        _create.Text("hello world");
                     });
                 });
-                result = sut.Render();
+
+                _result = _create.Render();
             }
 
-            Assert.AreEqual(result, "<div><span>hello world</span></div>");
+            Assert.AreEqual(_result, "<div><span>hello world</span></div>");
         }
 
         [TestMethod]
-        public void Should_create_selfclose_element()
+        public void Should_create_selfContained_element()
         {
-            var result = String.Empty;
-            using (var sut = new SimpleTagBuilder())
+            var _result = String.Empty;
+            using (var _create = new SimpleTagBuilder())
             {
-                sut.Tag("br", selfClose: true);
-                result = sut.Render();
+                _create.Tag("br", selfContained: true);
+                _result = _create.Render();
             }
 
-            Assert.AreEqual(result, "<br/>");
+            Assert.AreEqual(_result, "<br/>");
+        }
+
+        [TestMethod]
+        public void Should_create_element_with_attribute_without_value()
+        {
+            var _result = String.Empty;
+            using (var _create = new SimpleTagBuilder())
+            {
+                _create.Tag("div", withAttributes: new { ngApp = "" });
+                _result = _create.Render();
+            }
+
+            Assert.AreEqual(_result, "<div ng-app></div>");
         }
     }
 }
