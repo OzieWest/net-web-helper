@@ -65,6 +65,21 @@ using (var _create = new SimpleTagBuilder())
 // output: <div ng-app></div>
 ```
 
+##### add script
+```csharp
+var _result = String.Empty;
+using (var _create = new SimpleTagBuilder())
+{
+	_create.Tag("div", withChildren: () =>
+	{
+		_create.Script("alert(123);", useStrict: true);
+	});
+
+	_result = _create.Render();
+}
+// output: <div><script>'use strict';alert(123);</script></div>
+```
+
 #### Some conventions
  - name *myBigAttr* transform to *my-big-attr*
  - don`t start attribute name with UpperCase

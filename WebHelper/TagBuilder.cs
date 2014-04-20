@@ -27,9 +27,12 @@ namespace WebHelper
         /// <param name="selfContained">Является ли тег одиночным</param>
         /// <param name="withAttributes">Объект атрибутов</param>
         /// <param name="withChildren">Метод для формирования вложенных тегов</param>
-        public virtual void Tag(string name, bool selfContained = false, object withAttributes = null, Action withChildren = null)
+        public virtual void Tag(string name, bool selfContained = false, bool disabled = false, object withAttributes = null, Action withChildren = null)
         {
             this.htmlBuilder.Append("<" + name);
+
+            if (disabled)
+                AtributeDisabled();
 
             if (withAttributes != null)
             {
@@ -85,6 +88,12 @@ namespace WebHelper
 
             this.htmlBuilder.Append(_result);
         }
+
+        protected void AtributeDisabled(bool xhtml = false) 
+        {
+            var _result = xhtml ? String.Format(" disabled='disabled'") : String.Format(" disabled");
+            this.htmlBuilder.Append(_result);
+        }
     }
 
     public class SimpleTagBuilder : BaseTagBuilder, IDisposable
@@ -92,6 +101,18 @@ namespace WebHelper
         public virtual SimpleTagBuilder Text(string text)
         {
             this.htmlBuilder.Append(text);
+            return this;
+        }
+
+        public virtual SimpleTagBuilder Script(string jsScript, bool useStrict = false)
+        {
+            Tag("script", withChildren: () => {
+                if(useStrict)
+                    Text("'use strict';");
+
+                Text(jsScript);
+            });
+
             return this;
         }
 
